@@ -155,7 +155,7 @@ fun BoxScope.ForecastSection(
                 contentDescription = "",
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .height(125.dp)
+                    .height(110.dp)
                     .fillMaxWidth(),
                 contentScale = ContentScale.Crop
             )
@@ -164,7 +164,7 @@ fun BoxScope.ForecastSection(
                 contentDescription = "",
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .height(125.dp),
+                    .height(115.dp),
                 contentScale = ContentScale.Crop
             )
             Box(
