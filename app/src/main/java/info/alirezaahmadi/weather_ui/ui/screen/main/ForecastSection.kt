@@ -4,16 +4,19 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,8 +25,11 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -38,10 +44,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import info.alirezaahmadi.weather_ui.R
 import info.alirezaahmadi.weather_ui.data.HourlyWeather
 import info.alirezaahmadi.weather_ui.data.WeeklyWeather
 import kotlinx.coroutines.launch
@@ -55,7 +63,8 @@ fun BoxScope.ForecastSection(
     val tabs = listOf("Hourly Forecast", "Weekly Forecast")
     val pagerState = rememberPagerState { tabs.size }
     val coroutineScope = rememberCoroutineScope()
-    Box(
+
+    Column(
         modifier = Modifier
             .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp))
             .background(
@@ -67,84 +76,143 @@ fun BoxScope.ForecastSection(
                 )
             )
             .align(Alignment.BottomCenter)
+            .fillMaxWidth(),
     ) {
-        Column(
+        Box(
             modifier = Modifier
-                .align(Alignment.TopCenter)
-                .fillMaxWidth(),
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 10.dp, bottom = 4.dp)
+                .size(70.dp, 4.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .background(Color.White, RoundedCornerShape(20.dp)),
+        )
+        TabRow(
+            selectedTabIndex = pagerState.currentPage,
+            modifier = Modifier.fillMaxWidth(),
+            containerColor = Color.Transparent,
+            contentColor = Color.White,
+            divider = {
+                HorizontalDivider(
+                    thickness = 1.dp,
+                    color = Color.LightGray.copy(0.7f)
+                )
+            },
+            indicator = { tabPositions ->
+                Box(
+                    Modifier
+                        .tabIndicatorOffset(tabPositions[pagerState.currentPage])
+                        .height(4.dp)
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(Color(0xff593c7a))
+                )
+            }
         ) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 10.dp, bottom = 4.dp)
-                    .size(70.dp,4.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(Color.White,RoundedCornerShape(20.dp)),
-            )
-            TabRow(
-                selectedTabIndex = pagerState.currentPage,
-                modifier = Modifier.fillMaxWidth(),
-                containerColor = Color.Transparent,
-                contentColor = Color.White,
-                divider = {
-                    HorizontalDivider(
-                        thickness = 1.dp,
-                        color = Color.LightGray.copy(0.7f)
-                    )
-                },
-                indicator = { tabPositions ->
-                    Box(
-                        Modifier
-                            .tabIndicatorOffset(tabPositions[pagerState.currentPage])
-                            .height(4.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(Color(0xff593c7a))
-                    )
-                }
-            ) {
-                tabs.forEachIndexed { index, title ->
-                    Tab(
-                        selected = pagerState.currentPage == index,
-                        onClick = {
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(
-                                    page = index,
-                                    animationSpec = tween(600)
-                                )
-                            }
-                        },
-                        text = {
-                            Text(
-                                text = title,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = if (pagerState.currentPage == index) Color.White else Color.Gray
+            tabs.forEachIndexed { index, title ->
+                Tab(
+                    selected = pagerState.currentPage == index,
+                    onClick = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(
+                                page = index,
+                                animationSpec = tween(600)
                             )
                         }
-                    )
-                }
+                    },
+                    text = {
+                        Text(
+                            text = title,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (pagerState.currentPage == index) Color.White else Color.Gray
+                        )
+                    }
+                )
             }
-            HorizontalPager(
-                state = pagerState,
-            ) { page ->
-                when (page) {
-                    0 -> {
-                        HourlyForecastSection(hourlyWeatherDta)
-                    }
-
-                    1 -> {
-                        HourlyForecastSection(hourlyWeatherDta)
-                    }
-
-                    else -> {
-                        HourlyForecastSection(hourlyWeatherDta)
-                    }
-                }
-            }
-            Spacer(Modifier.height(250.dp))
         }
+        HorizontalPager(
+            state = pagerState,
+        ) { page ->
+            when (page) {
+                0 -> {
+                    HourlyForecastSection(hourlyWeatherDta)
+                }
+
+                1 -> {
+                    HourlyForecastSection(hourlyWeatherDta)
+                }
+
+                else -> {
+                    HourlyForecastSection(hourlyWeatherDta)
+                }
+            }
+        }
+        Spacer(Modifier.height(50.dp))
+        Box(
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Image(
+                painter = painterResource(R.drawable.bottom_f1),
+                contentDescription = "",
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .height(125.dp)
+                    .fillMaxWidth(),
+                contentScale = ContentScale.Crop
+            )
+            Image(
+                painter = painterResource(R.drawable.bottom_f2),
+                contentDescription = "",
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .height(125.dp),
+                contentScale = ContentScale.Crop
+            )
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .navigationBarsPadding()
+                    .padding(bottom = 6.dp)
+                    .clip(CircleShape)
+                    .background(Color.White, CircleShape)
+                    .clickable { }
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.plus),
+                    contentDescription = "",
+                    tint = Color(0xff48319D),
+                    modifier = Modifier.padding(12.dp)
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .padding(start = 25.dp)
+                    .align(Alignment.CenterStart),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.hover),
+                    contentDescription = "",
+                    tint = Color.White,
+                    modifier = Modifier.size(45.dp)
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .padding(end = 25.dp)
+                    .align(Alignment.CenterEnd)
+                    .clickable { },
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.menu),
+                    contentDescription = "",
+                    tint = Color.White,
+                    modifier = Modifier.size(30.dp)
+                )
+            }
 
 
+        }
     }
 }
 
