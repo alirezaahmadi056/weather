@@ -11,16 +11,12 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
@@ -29,7 +25,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -38,10 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -147,80 +139,78 @@ fun BoxScope.ForecastSection(
             }
         }
         Spacer(Modifier.height(50.dp))
-        Box(
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            Image(
-                painter = painterResource(R.drawable.bottom_f1),
-                contentDescription = "",
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .height(110.dp)
-                    .fillMaxWidth(),
-                contentScale = ContentScale.Crop
-            )
-            Image(
-                painter = painterResource(R.drawable.bottom_f2),
-                contentDescription = "",
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .height(115.dp),
-                contentScale = ContentScale.Crop
-            )
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .navigationBarsPadding()
-                    .padding(bottom = 6.dp)
-                    .clip(CircleShape)
-                    .background(Color.White, CircleShape)
-                    .clickable { }
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.plus),
-                    contentDescription = "",
-                    tint = Color(0xff48319D),
-                    modifier = Modifier.padding(12.dp)
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .padding(start = 25.dp)
-                    .align(Alignment.CenterStart),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.hover),
-                    contentDescription = "",
-                    tint = Color.White,
-                    modifier = Modifier.size(45.dp)
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .padding(end = 25.dp)
-                    .align(Alignment.CenterEnd)
-                    .clickable { },
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.menu),
-                    contentDescription = "",
-                    tint = Color.White,
-                    modifier = Modifier.size(30.dp)
-                )
-            }
-
-
-        }
+        BottomForecastSection()
     }
 }
 
 @Composable
 fun BottomForecastSection() {
     Box(
-        modifier = Modifier.fillMaxWidth()
-    )
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        Image(
+            painter = painterResource(R.drawable.bottom_f1),
+            contentDescription = "",
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .height(110.dp)
+                .fillMaxWidth(),
+            contentScale = ContentScale.Crop
+        )
+        Image(
+            painter = painterResource(R.drawable.bottom_f2),
+            contentDescription = "",
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .height(115.dp),
+            contentScale = ContentScale.Crop
+        )
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .navigationBarsPadding()
+                .padding(bottom = 6.dp)
+                .clip(CircleShape)
+                .background(Color.White, CircleShape)
+                .clickable { }
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.plus),
+                contentDescription = "",
+                tint = Color(0xff48319D),
+                modifier = Modifier.padding(12.dp)
+            )
+        }
+        Box(
+            modifier = Modifier
+                .padding(start = 25.dp)
+                .align(Alignment.CenterStart),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.hover),
+                contentDescription = "",
+                tint = Color.White,
+                modifier = Modifier.size(45.dp)
+            )
+        }
+        Box(
+            modifier = Modifier
+                .padding(end = 25.dp)
+                .align(Alignment.CenterEnd)
+                .clickable { },
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.menu),
+                contentDescription = "",
+                tint = Color.White,
+                modifier = Modifier.size(30.dp)
+            )
+        }
+
+
+    }
 }
 
 @Composable
