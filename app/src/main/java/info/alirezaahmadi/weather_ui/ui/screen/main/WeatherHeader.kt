@@ -28,11 +28,11 @@ fun BoxScope.WeatherHeader(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .statusBarsPadding()
             .align(Alignment.TopCenter)
+            .statusBarsPadding()
             .fillMaxWidth()
     ) {
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(40.dp))
         Text(
             text = cityName,
             fontSize = 30.sp,
