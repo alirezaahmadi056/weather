@@ -1,5 +1,6 @@
 package info.alirezaahmadi.weather_ui.ui.screen.main
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -30,6 +31,8 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,12 +42,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import info.alirezaahmadi.weather_ui.R
 import info.alirezaahmadi.weather_ui.data.HourlyWeather
 import info.alirezaahmadi.weather_ui.data.WeeklyWeather
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -130,7 +136,7 @@ fun BoxScope.ForecastSection(
                 }
 
                 1 -> {
-                    HourlyForecastSection(hourlyWeatherDta)
+                    WeeklyHourlyForecastSection(weeklyWeatherData)
                 }
 
                 else -> {
@@ -138,7 +144,6 @@ fun BoxScope.ForecastSection(
                 }
             }
         }
-        Spacer(Modifier.height(50.dp))
         BottomForecastSection()
     }
 }
@@ -219,11 +224,16 @@ fun HourlyForecastSection(
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(hourlyData) {
-            HourlyWeatherItem(it)
+        items(items = hourlyData, key = { it.hour }) { weather ->
+            ForecastItem(
+                icon = weather.iconRes,
+                time = weather.hour,
+                temp = weather.temperature.roundToInt(),
+                precipitationChance = weather.precipitationChance
+            )
         }
     }
 }
@@ -234,44 +244,65 @@ fun WeeklyHourlyForecastSection(
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(weeklyData) {
-            //   HourlyWeatherItem(it)
+        items(items = weeklyData, key = { it.day }) { weather ->
+            ForecastItem(
+                icon = weather.iconRes,
+                time = weather.day,
+                temp = weather.temperature.roundToInt(),
+                precipitationChance = weather.precipitationChance
+            )
         }
 
     }
 }
 
 @Composable
-fun HourlyWeatherItem(weather: HourlyWeather) {
+fun ForecastItem(
+    time: String,
+    icon: Int,
+    temp: Int,
+    precipitationChance: Int
+) {
+    val background by animateColorAsState(
+        targetValue = if (time == "Now") Color(0xff48319D) else
+            Color(0xFF4C4F69),
+        label = ""
+    )
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .width(60.dp)
-            .background(Color(0xFF4C4F69), shape = RoundedCornerShape(16.dp))
-            .padding(8.dp)
+            .background(background, shape = RoundedCornerShape(30.dp))
+            .padding(vertical = 10.dp, horizontal = 12.dp)
     ) {
         Text(
-            text = weather.hour,
-            fontSize = 14.sp,
-            color = Color.White
+            text = if (time.take(1).isDigitsOnly()) time.take(4)
+            else "${time.take(3)} ",
+            fontSize = 16.sp,
+            color = Color.White,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(vertical = 8.dp)
         )
         Image(
-            painter = painterResource(id = weather.iconRes),
+            painter = painterResource(id = icon),
             contentDescription = "Weather Icon",
-            modifier = Modifier.size(32.dp)
+            modifier = Modifier
+                .size(32.dp)
         )
         Text(
-            text = "${weather.precipitationChance}%",
+            text = if (precipitationChance > 0) "${precipitationChance}%" else "",
             fontSize = 12.sp,
             color = Color.Cyan
         )
 
         Text(
-            text = "${weather.temperature}°",
+            text = "$temp°",
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = Color.White,
+            modifier = Modifier.padding(vertical = 8.dp),
         )
     }
 }
