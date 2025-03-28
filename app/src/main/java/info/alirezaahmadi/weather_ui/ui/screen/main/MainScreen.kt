@@ -29,8 +29,8 @@ fun MainScreen() {
             painter = painterResource(R.drawable.house),
             contentDescription = "",
             modifier = Modifier
-                .padding(top = 15.dp)
-                .align(Alignment.Center),
+                .align(Alignment.Center)
+                .padding(top = 60.dp),
             contentScale = ContentScale.Fit
         )
         ForecastSection(weatherItem.hourlyForecast, weatherItem.weeklyForecast)
