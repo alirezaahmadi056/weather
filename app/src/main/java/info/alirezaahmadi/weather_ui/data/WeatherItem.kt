@@ -26,13 +26,13 @@ data class WeatherItem(
                 HourlyWeather("4 AM", 19.0, 5)
             ),
             weeklyForecast = listOf(
-                WeeklyWeather("Monday", 16.0, 22.0, "Cloudy"),
-                WeeklyWeather("Tuesday", 17.0, 23.0, "Partly Cloudy"),
-                WeeklyWeather("Now", 15.0, 21.0, "Rainy"),
-                WeeklyWeather("Thursday", 18.0, 24.0, "Sunny"),
-                WeeklyWeather("Friday", 16.0, 22.0, "Windy"),
-                WeeklyWeather("Saturday", 17.0, 23.0, "Mostly Clear"),
-                WeeklyWeather("Sunday", 18.0, 25.0, "Sunny")
+                WeeklyWeather("Monday",  22.0, 20),
+                WeeklyWeather("Tuesday",  23.0, 40),
+                WeeklyWeather("Now", 21.0, 80),
+                WeeklyWeather("Thursday",  24.0, 0),
+                WeeklyWeather("Friday",  22.0, 35),
+                WeeklyWeather("Saturday",  23.0, 100),
+                WeeklyWeather("Sunday", 25.0, 90),
             )
         )
     }
@@ -47,8 +47,8 @@ data class HourlyWeather(
 
 data class WeeklyWeather(
     val day: String,
-    val minTemp: Double,
-    val maxTemp: Double,
-    val weatherCondition: String
-)
+    val temperature: Double,
+    val precipitationChance: Int,
+    val iconRes: Int= R.drawable.cloud_rain,
+    )
 
