@@ -55,7 +55,6 @@ import info.alirezaahmadi.weather_ui.ui.screen.search.BottomSheetSearchCity
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BoxScope.ForecastSection(
     hourlyWeatherDta: List<HourlyWeather>,

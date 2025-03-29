@@ -11,6 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import info.alirezaahmadi.weather_ui.R
 import info.alirezaahmadi.weather_ui.data.WeatherItem
+import info.alirezaahmadi.weather_ui.ui.screen.search.BottomSheetSearchCity
 import kotlin.math.roundToInt
 
 @Composable
@@ -18,6 +19,7 @@ fun MainScreen() {
 
     val weatherItem = remember {  WeatherItem.fakeWeather}
     ImageBackground {
+
         WeatherHeader(
             temperature = weatherItem.temperature.toInt(),
             cityName = weatherItem.cityName,
