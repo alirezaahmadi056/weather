@@ -32,8 +32,10 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,6 +51,7 @@ import androidx.core.text.isDigitsOnly
 import info.alirezaahmadi.weather_ui.R
 import info.alirezaahmadi.weather_ui.data.HourlyWeather
 import info.alirezaahmadi.weather_ui.data.WeeklyWeather
+import info.alirezaahmadi.weather_ui.ui.screen.search.BottomSheetSearchCity
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -61,7 +64,11 @@ fun BoxScope.ForecastSection(
     val tabs = listOf("Hourly Forecast", "Weekly Forecast")
     val pagerState = rememberPagerState { tabs.size }
     val coroutineScope = rememberCoroutineScope()
-
+    var showSheetSearch by remember { mutableStateOf(false) }
+    BottomSheetSearchCity(
+        isShow = showSheetSearch,
+        onDismiss = { showSheetSearch = false }
+    )
     Column(
         modifier = Modifier
             .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp))
@@ -82,7 +89,7 @@ fun BoxScope.ForecastSection(
                 .padding(top = 10.dp, bottom = 4.dp)
                 .size(70.dp, 4.dp)
                 .clip(RoundedCornerShape(20.dp))
-                .background(Color.White, RoundedCornerShape(20.dp)),
+                .background(Color.LightGray, RoundedCornerShape(20.dp)),
         )
         TabRow(
             selectedTabIndex = pagerState.currentPage,
@@ -144,12 +151,14 @@ fun BoxScope.ForecastSection(
                 }
             }
         }
-        BottomForecastSection()
+        BottomForecastSection{showSheetSearch=true}
     }
 }
 
 @Composable
-fun BottomForecastSection() {
+fun BottomForecastSection(
+    showSheetSearch:()->Unit
+) {
     Box(
         contentAlignment = Alignment.BottomCenter
     ) {
@@ -177,7 +186,7 @@ fun BottomForecastSection() {
                 .padding(bottom = 6.dp)
                 .clip(CircleShape)
                 .background(Color.White, CircleShape)
-                .clickable { }
+                .clickable(onClick = showSheetSearch)
         ) {
             Icon(
                 painter = painterResource(R.drawable.plus),
