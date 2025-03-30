@@ -1,5 +1,6 @@
 package info.alirezaahmadi.weather_ui.data
 
+import androidx.annotation.DrawableRes
 import info.alirezaahmadi.weather_ui.R
 
 data class WeatherItem(
@@ -42,13 +43,13 @@ data class HourlyWeather(
     val hour: String,
     val temperature: Double,
     val precipitationChance: Int,
-    val iconRes: Int= R.drawable.cloud_rain,
+    @DrawableRes val iconRes: Int= R.drawable.cloud_rain,
     )
 
 data class WeeklyWeather(
     val day: String,
     val temperature: Double,
     val precipitationChance: Int,
-    val iconRes: Int= R.drawable.cloud_rain,
+    @DrawableRes  val iconRes: Int= R.drawable.cloud_rain,
     )
 
