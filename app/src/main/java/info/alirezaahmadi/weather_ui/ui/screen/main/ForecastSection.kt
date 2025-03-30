@@ -38,6 +38,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -70,17 +71,17 @@ fun BoxScope.ForecastSection(
     )
     Column(
         modifier = Modifier
+            .align(Alignment.BottomCenter)
+            .fillMaxWidth()
             .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp))
             .background(
                 Brush.radialGradient(
                     listOf(
-                        Color(0xff2E335A),
-                        Color(0xff1C1B33),
+                        Color(0xff2E335A).copy(0.8f),
+                        Color(0xff1C1B33).copy(0.8f),
                     )
                 )
-            )
-            .align(Alignment.BottomCenter)
-            .fillMaxWidth(),
+            ),
     ) {
         Box(
             modifier = Modifier
