@@ -257,7 +257,9 @@ private fun SearchSection(
             unfocusedContainerColor = Color(0xFF221C3B),
             cursorColor = Color.White,
             focusedIndicatorColor = Color(0xff2E335A),
-            unfocusedIndicatorColor = Color(0xff2E335A)
+            unfocusedIndicatorColor = Color(0xff2E335A),
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.LightGray
         ),
         shape = RoundedCornerShape(15.dp),
         singleLine = true
