@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -77,10 +79,11 @@ fun BoxScope.ForecastSection(
             .background(
                 Brush.radialGradient(
                     listOf(
-                        Color(0xff2E335A).copy(0.8f),
-                        Color(0xff1C1B33).copy(0.8f),
+                        Color(0xff2E335A),
+                        Color(0xff1C1B33),
                     )
-                )
+                ),
+                alpha = 0.90f
             ),
     ) {
         Box(
@@ -108,7 +111,16 @@ fun BoxScope.ForecastSection(
                         .tabIndicatorOffset(tabPositions[pagerState.currentPage])
                         .height(4.dp)
                         .clip(RoundedCornerShape(20.dp))
-                        .background(Color(0xff593c7a))
+                        .background(
+                            Brush.horizontalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color(0xff593c7a),
+                                    Color(0xff593c7a),
+                                    Color.Transparent
+                                ),
+                            )
+                        )
                 )
             }
         ) {
