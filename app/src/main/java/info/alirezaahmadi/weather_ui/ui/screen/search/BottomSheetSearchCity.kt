@@ -195,7 +195,7 @@ fun WeatherCard(
         }
 
         Image(
-            painter = painterResource(R.drawable.cloud_rain),
+            painter = painterResource(city.imageRes),
             contentDescription = "",
             modifier = Modifier
                 .align(Alignment.TopEnd)
