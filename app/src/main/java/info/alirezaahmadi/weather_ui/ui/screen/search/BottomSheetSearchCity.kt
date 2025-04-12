@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -244,6 +245,19 @@ private fun SearchSection(
                 contentDescription = "Search",
                 tint = Color(0xFFB0AFC3)
             )
+        },
+        trailingIcon ={
+            if (query.isNotEmpty()){
+                IconButton(
+                    onClick = {onQueryChange("")}
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = "",
+                        tint = Color(0xFFB0AFC3)
+                    )
+                }
+            }
         },
         placeholder = {
             Text(
