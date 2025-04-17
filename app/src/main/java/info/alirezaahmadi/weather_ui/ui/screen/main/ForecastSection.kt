@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -172,7 +173,6 @@ fun BottomForecastSection(
             painter = painterResource(R.drawable.bottom_f1),
             contentDescription = "",
             modifier = Modifier
-                .align(Alignment.BottomCenter)
                 .height(110.dp)
                 .fillMaxWidth(),
             contentScale = ContentScale.Crop
@@ -181,13 +181,11 @@ fun BottomForecastSection(
             painter = painterResource(R.drawable.bottom_f2),
             contentDescription = "",
             modifier = Modifier
-                .align(Alignment.BottomCenter)
                 .height(115.dp),
             contentScale = ContentScale.Crop
         )
         Box(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
                 .navigationBarsPadding()
                 .padding(bottom = 6.dp)
                 .clip(CircleShape)
