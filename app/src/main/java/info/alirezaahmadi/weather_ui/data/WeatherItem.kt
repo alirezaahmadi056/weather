@@ -20,19 +20,19 @@ data class WeatherItem(
             minTemp = 18.0,
             maxTemp = 24.0,
             hourlyForecast = listOf(
-                HourlyWeather("12 AM", 19.0, 30),
+                HourlyWeather("1 AM", 19.0, 30),
                 HourlyWeather("Now", 19.0, 10),
-                HourlyWeather("2 AM", 18.0, 20),
-                HourlyWeather("3 AM", 18.0, 10),
-                HourlyWeather("4 AM", 19.0, 5)
+                HourlyWeather("3 AM", 18.0, 20),
+                HourlyWeather("4 AM", 18.0, 10),
+                HourlyWeather("5 AM", 19.0, 5)
             ),
             weeklyForecast = listOf(
-                WeeklyWeather("Monday",  22.0, 20),
-                WeeklyWeather("Tuesday",  23.0, 40),
+                WeeklyWeather("Monday", 22.0, 20),
+                WeeklyWeather("Tuesday", 23.0, 40),
                 WeeklyWeather("Now", 21.0, 80),
-                WeeklyWeather("Thursday",  24.0, 0),
-                WeeklyWeather("Friday",  22.0, 35),
-                WeeklyWeather("Saturday",  23.0, 100),
+                WeeklyWeather("Thursday", 24.0, 0),
+                WeeklyWeather("Friday", 22.0, 35),
+                WeeklyWeather("Saturday", 23.0, 100),
                 WeeklyWeather("Sunday", 25.0, 90),
             )
         )
@@ -43,13 +43,13 @@ data class HourlyWeather(
     val hour: String,
     val temperature: Double,
     val precipitationChance: Int,
-    @DrawableRes val iconRes: Int= R.drawable.cloud_rain,
-    )
+    @DrawableRes val iconRes: Int = R.drawable.cloud_rain,
+)
 
 data class WeeklyWeather(
     val day: String,
     val temperature: Double,
     val precipitationChance: Int,
-    @DrawableRes  val iconRes: Int= R.drawable.cloud_rain,
-    )
+    @DrawableRes val iconRes: Int = R.drawable.cloud_rain,
+)
 
